@@ -16,12 +16,14 @@ class Tensor:
         return mul(self, other)
 
     def __matmul__(self, other):
-        ...
+        from ops import matmul
+        return matmul(self, other)
 
     def __pow__(self, other):
         from ops import pow
         return pow(self, other)
 
-
-    def __relu__(self, other):
+    def __relu__(self):
         from ops import relu
+        return relu(self)
+

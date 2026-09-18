@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11cbc248-e3aa-41eb-ade4-3d46052412e2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="11cbc248-e3aa-41eb-ade4-3d46052412e2" name="Changes" comment="Setup majority of ops.py and tensor.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/autograd-engine/engine/ops.py" beforeDir="false" afterPath="$PROJECT_DIR$/autograd-engine/engine/ops.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/autograd-engine/engine/tensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/autograd-engine/engine/tensor.py" afterDir="false" />
@@ -69,6 +67,19 @@
       <option name="presentableId" value="Default" />
       <updated>1788033408381</updated>
     </task>
+    <task id="LOCAL-00001" summary="Setup majority of ops.py and tensor.py">
+      <option name="closed" value="true" />
+      <created>1789036113650</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1789036113650</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Setup majority of ops.py and tensor.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Setup majority of ops.py and tensor.py" />
   </component>
 </project>

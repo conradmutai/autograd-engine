@@ -38,7 +38,15 @@ def mul(a: Tensor, b: Tensor) -> Tensor:
 def matmul(a: Tensor, b: Tensor) -> Tensor:
     out_data = a.data @ b.data
 
-    return ...
+    out = Tensor(out_data, _children=(a, b), _op='matmul')
+
+    def _backward():
+        a.grad += out.grad @ b.data.T
+        b.grad += a.data.T @ out.grad
+
+    out._backward = _backward
+
+    return out
 
 
 # powers
@@ -56,7 +64,7 @@ def pow(a: Tensor, n: int) -> Tensor:
 
 
 # conducts relu
-def relu(a: Tensor):
+def relu(a: Tensor) -> Tensor:
     out_data = a.data if a.data > 0 else 0
 
     out = Tensor(out_data, _children=(a,), _op='relu')
@@ -68,5 +76,11 @@ def relu(a: Tensor):
 
     return out
 
+
+# conducts softmax
+def softmax(a: Tensor) -> Tensor:
+    out_data = ...
+
+    return ...
 
 
