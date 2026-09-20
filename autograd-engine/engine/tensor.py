@@ -27,3 +27,6 @@ class Tensor:
         from ops import relu
         return relu(self)
 
+    def __softmax__(self):
+        from ops import softmax
+        return softmax(self)

@@ -1,3 +1,5 @@
+import numpy as np
+
 from tensor import Tensor
 
 
@@ -79,8 +81,27 @@ def relu(a: Tensor) -> Tensor:
 
 # conducts softmax
 def softmax(a: Tensor) -> Tensor:
-    out_data = ...
+    x = a.data
+    shifted = x - np.max(x, axis=1, keepdims=True)  # numerical stability
+    exp_x = np.exp(shifted)
+    out_data = exp_x / exp_x.sum(axis=1, keepdims=True)
 
-    return ...
+    out = Tensor(out_data, _children=(a,), _op='softmax')
+
+    def _backward():
+        # out_data: (batch_size, num_classes)
+        # for each row, build the n x n Jacobian and apply it to that row's upstream grad
+        batch_size, num_classes = out_data.shape
+        grad = np.zeros_like(out_data)
+
+        for b in range(batch_size):
+            s = out_data[b].reshape(-1, 1)  # (num_classes, 1)
+            jacobian = np.diagflat(s) - s @ s.T  # (num_classes, num_classes)
+            grad[b] = jacobian @ out.grad[b]
+
+        a.grad += grad
+
+    out._backward = _backward
+    return out
 
 
