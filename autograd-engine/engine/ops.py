@@ -1,6 +1,6 @@
 import numpy as np
 
-from tensor import Tensor
+from .tensor import Tensor
 
 
 # adds two tensors and contains a backward function too

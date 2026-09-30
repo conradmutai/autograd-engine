@@ -8,27 +8,27 @@ class Tensor:
         self._backward = lambda: None  # no-op by default (leaf nodes)
 
     def __add__(self, other):
-        from ops import add
+        from .ops import add
         return add(self, other)
 
     def __mul__(self, other):
-        from ops import mul
+        from .ops import mul
         return mul(self, other)
 
     def __matmul__(self, other):
-        from ops import matmul
+        from .ops import matmul
         return matmul(self, other)
 
     def __pow__(self, other):
-        from ops import pow
+        from .ops import pow
         return pow(self, other)
 
     def __relu__(self):
-        from ops import relu
+        from .ops import relu
         return relu(self)
 
     def __softmax__(self):
-        from ops import softmax
+        from .ops import softmax
         return softmax(self)
 
     def backward(self):
