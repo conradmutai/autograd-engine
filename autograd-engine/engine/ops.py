@@ -105,3 +105,17 @@ def softmax(a: Tensor) -> Tensor:
     return out
 
 
+# sums the data in a Tensor
+def sum(a: Tensor) -> Tensor:
+    out_data = np.sum(a.data)
+
+    out = Tensor(out_data, _children=(a,), _op='sum')
+
+    def _backward():
+        # every element of a contributed equally to the total,
+        # so upstream gradient flows back to every element unchanged
+        a.grad += np.ones_like(a.data) * out.grad
+
+    out._backward = _backward
+    return out
+

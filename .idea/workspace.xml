@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11cbc248-e3aa-41eb-ade4-3d46052412e2" name="Changes" comment="Set-up optim.py">
+    <list default="true" id="11cbc248-e3aa-41eb-ade4-3d46052412e2" name="Changes" comment="Finished optim.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autograd-engine/engine/optim.py" beforeDir="false" afterPath="$PROJECT_DIR$/autograd-engine/engine/optim.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autograd-engine/engine/ops.py" beforeDir="false" afterPath="$PROJECT_DIR$/autograd-engine/engine/ops.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autograd-engine/tests/test_gradcheck.py" beforeDir="false" afterPath="$PROJECT_DIR$/autograd-engine/tests/test_gradcheck.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +107,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790161915153</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Finished optim.py">
+      <option name="closed" value="true" />
+      <created>1790594570413</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1790594570413</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -114,6 +123,7 @@
     <MESSAGE value="Completed ops.py and tensor.py" />
     <MESSAGE value="tensor.py completed" />
     <MESSAGE value="Set-up optim.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set-up optim.py" />
+    <MESSAGE value="Finished optim.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished optim.py" />
   </component>
 </project>
