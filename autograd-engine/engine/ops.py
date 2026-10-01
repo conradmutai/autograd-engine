@@ -67,7 +67,7 @@ def pow(a: Tensor, n: int) -> Tensor:
 
 # conducts relu
 def relu(a: Tensor) -> Tensor:
-    out_data = a.data if a.data > 0 else 0
+    out_data = np.maximum(0, a.data)
 
     out = Tensor(out_data, _children=(a,), _op='relu')
 

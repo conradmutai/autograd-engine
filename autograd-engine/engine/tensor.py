@@ -23,11 +23,11 @@ class Tensor:
         from .ops import pow
         return pow(self, other)
 
-    def __relu__(self):
+    def relu(self):
         from .ops import relu
         return relu(self)
 
-    def __softmax__(self):
+    def softmax(self):
         from .ops import softmax
         return softmax(self)
 
