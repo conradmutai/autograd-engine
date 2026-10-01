@@ -25,7 +25,7 @@ def numerical_grad(f, x: np.ndarray, eps=1e-5) -> np.ndarray:
     return res
 
 
-# performs the gradient check to see if it has died
+# performs the gradient check
 def gradcheck(op_fn, *inputs, eps=1e-5, threshold=1e-5):
     tensors = [Tensor(x.copy()) for x in inputs]
     out = op_fn(*tensors)
