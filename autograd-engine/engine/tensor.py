@@ -7,6 +7,18 @@ class Tensor:
         self._op = _op
         self._backward = lambda: None  # no-op by default (leaf nodes)
 
+    @property
+    def shape(self):
+        return self.data.shape
+
+    def __repr__(self):
+        return f"Tensor(data={self.data}, op='{self._op}')"
+
+    @staticmethod
+    def _wrap(x):
+        # lets `x * 2` and `x + 1` work with plain numbers/arrays
+        return x if isinstance(x, Tensor) else Tensor(x)
+
     def __add__(self, other):
         from .ops import add
         return add(self, other)
@@ -23,6 +35,28 @@ class Tensor:
         from .ops import pow
         return pow(self, other)
 
+    def __neg__(self):
+        return self * -1.0
+
+    def __sub__(self, other):
+        return self + (-self._wrap(other))
+
+    def __truediv__(self, other):
+        return self * (self._wrap(other) ** -1)
+
+    # reflected versions: make `2 * x`, `1 + x`, `1 - x`, `1 / x` work
+    def __radd__(self, other):
+        return self + other
+
+    def __rmul__(self, other):
+        return self * other
+
+    def __rsub__(self, other):
+        return self._wrap(other) + (-self)
+
+    def __rtruediv__(self, other):
+        return self._wrap(other) * (self ** -1)
+
     def relu(self):
         from .ops import relu
         return relu(self)
@@ -30,6 +64,10 @@ class Tensor:
     def softmax(self):
         from .ops import softmax
         return softmax(self)
+
+    def sum(self):
+        from engine.ops import sum as sum_op
+        return sum_op(self)
 
     def backward(self):
         topo = []

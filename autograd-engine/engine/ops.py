@@ -11,8 +11,8 @@ def add(a: Tensor, b: Tensor) -> Tensor:
     out = Tensor(out_data, _children=(a, b), _op='add')
 
     def _backward():
-        a.grad += 1.0 * out.grad
-        b.grad += 1.0 * out.grad
+        a.grad += _unbroadcast(out.grad, a.data.shape)
+        b.grad += _unbroadcast(out.grad, b.data.shape)
 
     out._backward = _backward
     return out
@@ -28,8 +28,8 @@ def mul(a: Tensor, b: Tensor) -> Tensor:
     # does the backward operation when .backward is called upon at the final loss
     def _backward():
         # accumulate the gradient
-        a.grad += b.data * out.grad
-        b.grad += a.data * out.grad
+        a.grad += _unbroadcast(b.data * out.grad, a.data.shape)
+        b.grad += _unbroadcast(a.data * out.grad, b.data.shape)
 
     out._backward = _backward
 
@@ -105,6 +105,36 @@ def softmax(a: Tensor) -> Tensor:
     return out
 
 
+# cross entropy loss method (used to measure accuracy of classification model)
+def cross_entropy(logits: Tensor, targets: np.ndarray) -> Tensor:
+    x = logits.data
+    batch = x.shape[0]
+    assert targets.shape[0] == batch
+
+    # subtract the max so exp doesn't blow up
+    shifted = x - np.max(x, axis=1, keepdims=True)
+    exp_x = np.exp(shifted)
+
+    # log softmax directly so we never take log of 0
+    log_softmax = shifted - np.log(np.sum(exp_x, axis=1, keepdims=True))
+    probs = np.exp(log_softmax)
+    picked = log_softmax[np.arange(batch), targets]
+
+    loss = np.mean(-picked)
+
+    out = Tensor(loss, _children=(logits,), _op='cross_entropy')
+
+    def _backward():
+        # probs - one_hot, but only the correct class entries change
+        grad = probs.copy()
+        grad[np.arange(batch), targets] -= 1
+
+        logits.grad += grad / batch * out.grad
+
+    out._backward = _backward
+    return out
+
+
 # sums the data in a Tensor
 def sum(a: Tensor) -> Tensor:
     out_data = np.sum(a.data)
@@ -119,3 +149,29 @@ def sum(a: Tensor) -> Tensor:
     out._backward = _backward
     return out
 
+
+# calculates the mean of the model
+def mean(a: Tensor) -> Tensor:
+    # sum divided by a.data.size
+    out_data = np.sum(a.data)  / a.data.size
+
+    out = Tensor(out_data, _children=(a,), _op='mean')
+
+    # Backward is the sum backward scaled by 1/size
+    def _backward():
+        a.grad += out.grad * (1/a.data.size)
+
+    out._backward = _backward
+    return out
+
+
+def _unbroadcast(grad, shape):
+    # numpy adds extra leading axes when the smaller operand has fewer dims, sum those away
+    while grad.ndim > len(shape):
+        grad = grad.sum(axis=0)
+
+    # numpy also stretches any axis that was size 1, sum those back down (keepdims so the shape matches)
+    for axis, dim in enumerate(shape):
+        if dim == 1 and grad.shape[axis] != 1:
+            grad = grad.sum(axis=axis, keepdims=True)
+    return grad
