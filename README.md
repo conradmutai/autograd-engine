@@ -31,7 +31,7 @@ Test Accuracy and Train Accuracy in %, Loss in decimal (average loss over the fi
 
 The loss starts near ln(3) ≈ 1.1, which is what a 3-class model that is guessing should give. SGD's accuracy bounces between roughly 92% and 99% from epoch to epoch late in training, so its final number is a snapshot rather than a stable value. The test set is generated with the same function as the training set but a different seed, meaning it has the same underlying spirals with different noise, which makes it a weaker test than data from a different distribution.
 
-![Loss per epoch](results/loss_curves.png)
+![Loss per epoch](autograd-engine/examples/loss_curves.png)
 
 ### Gradient Checking
 Every operation's backward pass is compared against a numerical gradient (centered difference, eps = 1e-5). Max relative error:
@@ -56,7 +56,7 @@ The PyTorch model is built with the same layers and my starting weights are copi
 | SGD loss curve over 200 steps | max difference 4.4e-16 |
 | Adam loss curve over 200 steps | max difference 2.2e-16 |
 
-![Mine vs PyTorch](results/benchmark_curves.png)
+![Mine vs PyTorch](autograd-engine/benchmark_curves.png)
 
 Time per training step with Adam (median of three runs, measured on a 2-thread CPU, so the exact numbers will differ on other hardware):
 
